@@ -24,6 +24,9 @@ http.createServer(function (req, res) {
         if(!id){
             res.end("No search value.")
         }
+        if(!collection){
+            res.end("Not connected to database.")
+        }
         if(isNaN(id[0])){
             result = collection.find({town: id}).toArray(function(err, item){
                 if(err){
