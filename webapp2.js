@@ -24,8 +24,7 @@ http.createServer(function (req, res) {
             res.end("No search value.")
         }
         if(isNaN(id[0])){
-            var dbo = db.db("assignment10");
-            result = dbo.collection('places').find({town: id}).toArray(function(err, item){
+            result = collection.find({town: id}).toArray(function(err, item){
                 if(err){
                     return console.log(err);
                 }
@@ -34,8 +33,7 @@ http.createServer(function (req, res) {
                 res.end()
             })
         } else{
-            var dbo = db.db("assignment10");
-            result = dbo.collection('places').find({zips: {$all: [id]}}).toArray(function(err, item){
+            result = collection.find({zips: {$all: [id]}}).toArray(function(err, item){
                 if(err){
                     return console.log(err);
                 }
