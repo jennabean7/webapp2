@@ -4,16 +4,19 @@
   "description": "Heroku app for assignment 10",
   "main": "webapp2.js",
   "scripts": {
-  "start": "node webapp2.js"
-},
+    "start": "node webapp2.js"
+  },
   "repository": {
-  "type": "git",
-  "url": ""
-},
+    "type": "git",
+    "url": ""
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
-  "url": ""
-},
-  "homepage": ""
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "mongodb": "^7.5.0"
+  }
 }
