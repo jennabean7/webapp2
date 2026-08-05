@@ -26,10 +26,15 @@ http.createServer(function (req, res) {
                 return console.log(err);
             }
             var dbo = db.db("assignment10");
-            result = dbo.collection('places').find({town: id})
-            console.log(result)
-            res.write(result)
-            res.end()
+            result = dbo.collection('places').find({town: id}).toArray(function(err, item){
+                if(err){
+                    return console.log(err);
+                }
+                console.log(JSON.stringify(item))
+                res.write(JSON.stringify(item))
+                res.end()
+                db.close()
+            })
         })
     } else{
         MongoClient.connect(mongoURL, function(err, db){
@@ -37,10 +42,15 @@ http.createServer(function (req, res) {
                 return console.log(err);
             }
             var dbo = db.db("assignment10");
-            result = dbo.collection('places').find({zips: {$all: [id]}})
-            console.log(result)
-            res.write(result)
-            res.end()
+            result = dbo.collection('places').find({zips: {$all: [id]}}).toArray(function(err, item){
+                if(err){
+                    return console.log(err);
+                }
+                console.log(JSON.stringify(item))
+                res.write(JSON.stringify(item))
+                res.end()
+                db.close()
+            })
         })
     }
   }
