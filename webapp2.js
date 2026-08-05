@@ -14,33 +14,34 @@ http.createServer(function (req, res) {
      res.write("<h2>Zip Code Lookup</h2>");
      s = "<form method='get' action='/process'>" +
          "Enter a town name or zip code: <input type='text' name='id'><br /><input type='submit'></form>"
+     res.write(s)
      res.end()
   }
   else if (urlObj.pathname == "/process") {
     id = urlObj.query.id
 
     if(isNaN(id[0])){
-        MongoClient.connect(url, function(err, db){
+        MongoClient.connect(mongoURL, function(err, db){
             if(err){
                 return console.log(err);
             }
             var dbo = db.db("assignment10");
             result = dbo.collection('places').find({town: id})
             console.log(result)
+            res.write(result)
+            res.end()
         })
     } else{
-        MongoClient.connect(url, function(err, db){
+        MongoClient.connect(mongoURL, function(err, db){
             if(err){
                 return console.log(err);
             }
             var dbo = db.db("assignment10");
             result = dbo.collection('places').find({zips: {$all: [id]}})
             console.log(result)
+            res.write(result)
+            res.end()
         })
     }
-    
-    res.write ("The id is: " + id)
-    res.end();
-    console.log('hey')
   }
 }).listen(port);
