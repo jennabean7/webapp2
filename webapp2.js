@@ -9,7 +9,7 @@ const mongoURL = "mongodb://jbean03_db_user:4JFxS5zGtTYVwRDA@ac-kcfncmb-shard-00
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   urlObj = url.parse(req.url,true)
-  if (urlObj.pathname == "/home") 
+  if (urlObj.pathname == "/") 
   {
      res.write("<h2>Zip Code Lookup</h2>");
      s = "<form method='get' action='/process'>" +
