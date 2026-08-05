@@ -50,5 +50,5 @@ MongoClient.connect(mongoURL, function(err, db){
         return console.log(err);
     }
     var dbo = db.db("assignment10");
-	var collection = dbo.collection('places');
-})
+	collection = dbo.collection('places');
+});
