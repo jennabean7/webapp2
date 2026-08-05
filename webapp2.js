@@ -36,7 +36,6 @@ MongoClient.connect(mongoURL, function(err, db){
                     console.log(JSON.stringify(item))
                     res.write(JSON.stringify(item))
                     res.end()
-                    db.close()
                 })
             } else{
                 var dbo = db.db("assignment10");
@@ -47,7 +46,6 @@ MongoClient.connect(mongoURL, function(err, db){
                     console.log(JSON.stringify(item))
                     res.write(JSON.stringify(item))
                     res.end()
-                    db.close()
                 })
             }
         }
