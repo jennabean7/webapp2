@@ -24,9 +24,11 @@ http.createServer(function (req, res) {
         id = urlObj.query.id
         if(!id){
             res.end("No search value.")
+            return
         }
         if(!collection){
             res.end("Not connected to database.")
+            return
         }
         if(isNaN(id[0])){
             result = collection.find({town: id}).toArray(function(err, item){
@@ -47,6 +49,8 @@ http.createServer(function (req, res) {
                 res.end()
             })
         }
+    } else {
+        res.end("Invalid path.")
     }
 }).listen(port);
 
