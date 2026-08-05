@@ -52,5 +52,4 @@ MongoClient.connect(mongoURL, function(err, db){
             }
         }
     }).listen(port);
-    db.close();
 })
