@@ -6,6 +6,7 @@ const fs = require('fs')
 const MongoClient = require('mongodb').MongoClient;
 const mongoURL = "mongodb+srv://jbean03_db_user:4JFxS5zGtTYVwRDA@assignment10.aedupsh.mongodb.net/?appName=assignment10"
 
+let collection = null;
 
 http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
