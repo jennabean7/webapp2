@@ -6,6 +6,8 @@ const fs = require('fs')
 const MongoClient = require('mongodb').MongoClient;
 const mongoURL = "mongodb+srv://jbean03_db_user:4JFxS5zGtTYVwRDA@assignment10.aedupsh.mongodb.net/?appName=assignment10"
 
+let collection = null;
+
 async function main() {
     try{
         MongoClient.connect(url, function(err, db){
@@ -15,12 +17,10 @@ async function main() {
             var dbo = db.db("assignment10");
             var collection = dbo.collection("places");
 
-            buildPage(collection).then(() => {
-                db.close();
-            });
+            buildPage(collection);
         })
     } catch (err){
-
+        return console.log(err)
     }
 }
 
