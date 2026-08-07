@@ -46,10 +46,6 @@ function buildPage(){
                 return
             }
             try{
-                if(result.length === 0){
-                    "Invalid town or zip code."
-                    return;
-                }
                 if(isNaN(id[0])){
                     firstIDchar = id.slice(0,1).toUpperCase();
                     restID = id.slice(1).toLowerCase();
@@ -59,10 +55,16 @@ function buildPage(){
                     result = await collection.find({zips: {$all: [id]}}).toArray()
                 }
 
-                for(const item of result){
-                    res.write(item.town + " zip code(s): " + item.zips)
+                if(result.length === 0){
+                    "Invalid town or zip code."
+                    return;
+                } else{
+                    for(const item of result){
+                        res.write(item.town + " zip code(s): " + item.zips)
+                    }
+                    res.end()
                 }
-                res.end()
+
             } catch(err){
                 console.log(err)
                 res.end()
