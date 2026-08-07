@@ -60,3 +60,5 @@ function buildPage(){
         }
     }).listen(port);
 }
+
+main();
