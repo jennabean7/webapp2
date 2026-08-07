@@ -10,22 +10,18 @@ let collection = null;
 
 async function main() {
     try{
-        MongoClient.connect(url, function(err, db){
-            if(err){
-                return console.log(err);
-            }
-            var dbo = db.db("assignment10");
-            var collection = dbo.collection("places");
-
-            buildPage(collection);
-        })
+        const client = new MongoClient(mongoURL);
+        await client.connect()
+        dbo = client.db("assignment10")
+        collection = dbo.collection("places");
+        buildPage()
     } catch (err){
         return console.log(err)
     }
 }
 
-function buildPage(collection){
-    http.createServer(function (req, res) {
+function buildPage(){
+    http.createServer(async function (req, res) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         urlObj = url.parse(req.url,true)
         if (urlObj.pathname == "/") 
@@ -46,24 +42,18 @@ function buildPage(collection){
                 res.end("Not connected to database.")
                 return
             }
-            if(isNaN(id[0])){
-                result = collection.find({town: id}).toArray(function(err, item){
-                    if(err){
-                        return console.log(err);
-                    }
-                    console.log(JSON.stringify(item))
-                    res.write(JSON.stringify(item))
-                    res.end()
-                })
-            } else{
-                result = collection.find({zips: {$all: [id]}}).toArray(function(err, item){
-                    if(err){
-                        return console.log(err);
-                    }
-                    console.log(JSON.stringify(item))
-                    res.write(JSON.stringify(item))
-                    res.end()
-                })
+            try{
+                if(isNaN(id[0])){
+                    result = await collection.find({town: id}).toArray()
+                } else {
+                    result = await collection.find({zips: {$all: [id]}}).toArray()
+                }
+                console.log(item[i].town + "zip: " + item[i].zips)
+                res.write(item[i].town + "zip: " + item[i].zips)
+                res.end()
+            } catch(err){
+                console.log(err)
+                res.end()
             }
         } else {
             res.end("Invalid path.")
