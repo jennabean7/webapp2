@@ -66,8 +66,8 @@ function buildPage(){
                 } // END if/else
 
                 // If no results, display 'error'
-                if(result.length == 0){
-                    "Invalid town or zip code."
+                if(result.length === 0){
+                    res.end("Invalid town or zip code.")
                     return;
                 } else{
                     // Display the results 
