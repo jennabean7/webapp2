@@ -48,8 +48,14 @@ function buildPage(){
                 } else {
                     result = await collection.find({zips: {$all: [id]}}).toArray()
                 }
-                console.log(item[i].town + "zip: " + item[i].zips)
-                res.write(item[i].town + "zip: " + item[i].zips)
+                if(result.length === 0){
+                    "Invalid town or zip code."
+                    return;
+                }
+
+                for(const item of result){
+                    res.write(item.town + " zip code(s): " + item.zips)
+                }
                 res.end()
             } catch(err){
                 console.log(err)
