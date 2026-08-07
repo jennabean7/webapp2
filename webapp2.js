@@ -41,6 +41,7 @@ function buildPage(){
             res.end()
         }
         else if (urlObj.pathname == "/process") {
+            idIsTown = false;
             // Get the ID 
             id = urlObj.query.id
             // If ID is empty (no search value), display 'error' message
@@ -52,6 +53,7 @@ function buildPage(){
             try{
                 // If the first letter is not a number, assume user has entered town name
                 if(isNaN(id[0])){
+                    idIsTown = true;
                     // Make sure the first letter of the town name is capital to avoid db errors
                     firstIDchar = id.slice(0,1).toUpperCase();
                     restID = id.slice(1).toLowerCase();
@@ -69,9 +71,15 @@ function buildPage(){
                     return;
                 } else{
                     // Display the results 
+                    res.write("<h2>Results for " + id + ": </h2>")
                     for(const item of result){
-                        res.write(item.town + " zip code(s): " + item.zips)
-                        console.log(item.town + " zip code(s): " + item.zips)
+                        if(idIsTown){
+                            res.write("Zip code(s): " + item.zips + "<br>")
+                            console.log("Zip code(s): " + item.zips)
+                        } else{
+                            res.write("Town: " + item.town + "<br>")
+                            console.log("Town: " + item.town)
+                        }
                     } // END for 
                     res.end()
                 } // END if/else
