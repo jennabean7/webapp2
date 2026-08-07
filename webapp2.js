@@ -34,6 +34,9 @@ function buildPage(){
         }
         else if (urlObj.pathname == "/process") {
             id = urlObj.query.id
+            firstIDchar = id.slice(0,1).toUpperCase();
+            restID = id.slice(1).toLowerCase();
+            formattedID = firstIDchar + restID
             if(!id){
                 res.end("No search value.")
                 return
@@ -44,7 +47,10 @@ function buildPage(){
             }
             try{
                 if(isNaN(id[0])){
-                    result = await collection.find({town: id}).toArray()
+                    firstIDchar = id.slice(0,1).toUpperCase();
+                    restID = id.slice(1).toLowerCase();
+                    formattedID = firstIDchar + restID
+                    result = await collection.find({town: formattedID}).toArray()
                 } else {
                     result = await collection.find({zips: {$all: [id]}}).toArray()
                 }
